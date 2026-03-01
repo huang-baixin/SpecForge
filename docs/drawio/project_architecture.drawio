@@ -1,0 +1,92 @@
+<?xml version="1.0" ?>
+<mxfile host="Electron" modified="2024-05-22T00:00:00.000Z" agent="5.0 (Macintosh)" etag="v" version="21.0.0" type="device">
+  <diagram id="diagram_1" name="SpecForge Architecture">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+        <mxCell id="script" value="Entry Script
+(scripts/train_eagle3.py)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1" parent="1" vertex="1">
+          <mxGeometry x="360" y="40" width="200" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="data_pipeline" value="Data Pipeline
+(specforge.data)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#f5f5f5;strokeColor=#666666;" parent="1" vertex="1">
+          <mxGeometry x="40" y="160" width="200" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="dataset" value="Eagle3Dataset" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;fillColor=#e1d5e7;strokeColor=#9673a6;" parent="data_pipeline" vertex="1">
+          <mxGeometry x="20" y="40" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="dataloader" value="DataLoader" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="data_pipeline" vertex="1">
+          <mxGeometry x="20" y="120" width="160" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="core_orch" value="Core Orchestrator
+(specforge.core.eagle3)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;" parent="1" vertex="1">
+          <mxGeometry x="280" y="160" width="500" height="600" as="geometry"/>
+        </mxCell>
+        <mxCell id="online_model" value="OnlineEagle3Model
+(Wrapper)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1" parent="core_orch" vertex="1">
+          <mxGeometry x="40" y="40" width="420" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="target_model" value="Target Model (Teacher)
+(specforge.modeling.target)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#fff2cc;" parent="core_orch" vertex="1">
+          <mxGeometry x="20" y="140" width="460" height="180" as="geometry"/>
+        </mxCell>
+        <mxCell id="target_interface" value="Interface: Eagle3TargetModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=2" parent="target_model" vertex="1">
+          <mxGeometry x="20" y="30" width="420" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="target_impl_hf" value="HFEagle3TargetModel
+(Hooks)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="target_model" vertex="1">
+          <mxGeometry x="20" y="90" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="target_impl_sglang" value="SGLangBackend
+(High Perf)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="target_model" vertex="1">
+          <mxGeometry x="230" y="90" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="draft_model" value="Draft Model (Student)
+(specforge.modeling.draft)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#e1d5e7;" parent="core_orch" vertex="1">
+          <mxGeometry x="20" y="360" width="460" height="200" as="geometry"/>
+        </mxCell>
+        <mxCell id="draft_interface" value="Interface: Eagle3DraftModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=2" parent="draft_model" vertex="1">
+          <mxGeometry x="20" y="30" width="420" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="draft_impl_llama" value="Llama3EagleDraftModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="draft_model" vertex="1">
+          <mxGeometry x="20" y="90" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="draft_impl_dflash" value="DFlashDraftModel" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" parent="draft_model" vertex="1">
+          <mxGeometry x="230" y="90" width="190" height="60" as="geometry"/>
+        </mxCell>
+        <mxCell id="adapters" value="Adapters
+(specforge.core.eagle3_adapters)" style="swimlane;whiteSpace=wrap;html=1;startSize=23;fillColor=#ffe6cc;strokeColor=#d79b00;" parent="1" vertex="1">
+          <mxGeometry x="820" y="160" width="200" height="160" as="geometry"/>
+        </mxCell>
+        <mxCell id="backend_adapter" value="BackendAdapter" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontStyle=2" parent="adapters" vertex="1">
+          <mxGeometry x="20" y="30" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="sdpa_adapter" value="SdpaLikeAdapter" style="shape=process;whiteSpace=wrap;html=1;backgroundOutline=1;fillColor=#fff2cc;strokeColor=#d6b656;" parent="adapters" vertex="1">
+          <mxGeometry x="20" y="90" width="160" height="40" as="geometry"/>
+        </mxCell>
+        <mxCell id="e1" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;entryX=0.5;entryY=0;" parent="1" edge="1" source="script" target="data_pipeline">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" edge="1" source="script" target="core_orch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e3" value="Batches" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=0;entryY=0.25;" parent="1" edge="1" source="data_pipeline" target="core_orch">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e4" value="Forward / Hooks" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;" parent="1" edge="1" source="online_model" target="target_interface">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e5" value="Hidden States" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;entryX=0.5;entryY=0;" parent="1" edge="1" source="target_model" target="draft_model">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e6" value="Logits" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;entryX=1;entryY=0.5;curved=1;" parent="1" edge="1" source="draft_model" target="online_model">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+        <mxCell id="e7" value="Uses" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.25;entryX=0;entryY=0.5;" parent="1" edge="1" source="core_orch" target="adapters">
+          <mxGeometry relative="1" as="geometry"/>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
